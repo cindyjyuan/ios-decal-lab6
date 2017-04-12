@@ -19,18 +19,107 @@ class LoginViewController: UIViewController {
 
     // TODO: instantiate the views needed for your project
     
+    var titleUI: UILabel!
+    var usernameText: UITextField!
+    var passwordText: UITextField!
+    var loginButton: UIButton!
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Constants.backgroundColor
         
         // TODO: Add your views either as subviews of `view` or subviews of each other using `addSubview`
+        titleUI = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.width * 0.75, height: 100))
+        titleUI.text = "Login View Controller"
+        titleUI.font = UIFont(name: "HelveticaNeue-Light", size: 36.0)
+        titleUI.textColor = UIColor.white
+        
+        let view1 = UIView()
+        view1.backgroundColor = UIColor.white
+        view1.layer.cornerRadius = 8;
+        
+        usernameText = UITextField()
+        usernameText.placeholder = "youremail@berkeley.edu"
+        passwordText = UITextField()
+        passwordText.placeholder = "password"
+        
+        loginButton = UIButton()
+        loginButton.backgroundColor = UIColor(red: 40/255, green: 175/255, blue: 240/255, alpha: 1)
+        loginButton.tintColor = UIColor.white
+        loginButton.setTitle("LOGIN", for: .normal)
+        loginButton.addTarget(self, action: #selector(login), for: .touchUpInside)
+        loginButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
+        loginButton.layer.cornerRadius = 5
+        
+        view1.addSubview(usernameText)
+        view1.addSubview(passwordText)
+        view1.addSubview(loginButton)
+        view.addSubview(titleUI)
+        view.addSubview(view1)
         
         // TODO: layout your views using frames or AutoLayout
+        
+        view1.translatesAutoresizingMaskIntoConstraints = false
+        titleUI.translatesAutoresizingMaskIntoConstraints = false
+        usernameText.translatesAutoresizingMaskIntoConstraints = false
+        passwordText.translatesAutoresizingMaskIntoConstraints = false
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        let titleUIConstraints = [
+            titleUI.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleUI.topAnchor.constraint(equalTo: view.topAnchor, constant: 100)
+        ]
+        
+        NSLayoutConstraint.activate(titleUIConstraints)
+        
+        let viewConstraints = [
+            view1.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            view1.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            view1.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.85),
+            view1.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.25)
+        ]
+        
+        NSLayoutConstraint.activate(viewConstraints)
+        
+        let usernameTextConstraints = [
+            usernameText.topAnchor.constraint(equalTo: view1.topAnchor, constant: 6),
+            usernameText.leftAnchor.constraint(equalTo: view1.leftAnchor, constant: 6),
+            usernameText.rightAnchor.constraint(equalTo: view1.rightAnchor, constant: -6),
+            usernameText.centerXAnchor.constraint(equalTo: view1.centerXAnchor)
+        ]
+        
+        NSLayoutConstraint.activate(usernameTextConstraints)
+        
+        let passwordTextConstraints = [
+            passwordText.heightAnchor.constraint(equalTo: usernameText.heightAnchor),
+            passwordText.leftAnchor.constraint(equalTo: view1.leftAnchor, constant: 6),
+            passwordText.rightAnchor.constraint(equalTo: view1.rightAnchor, constant: -6),
+            passwordText.centerXAnchor.constraint(equalTo: view1.centerXAnchor),
+            passwordText.centerYAnchor.constraint(equalTo: view1.centerYAnchor)
+        ]
+        
+        NSLayoutConstraint.activate(passwordTextConstraints)
+        
+        let loginButtonConstraints = [
+            loginButton.bottomAnchor.constraint(equalTo: view1.bottomAnchor, constant: -10),
+            loginButton.heightAnchor.constraint(equalTo: usernameText.heightAnchor),
+            loginButton.leftAnchor.constraint(equalTo: view1.leftAnchor, constant: 60),
+            loginButton.rightAnchor.constraint(equalTo: view1.rightAnchor, constant: -60),
+            loginButton.centerXAnchor.constraint(equalTo: view1.centerXAnchor)
+        ]
+        
+        NSLayoutConstraint.activate(loginButtonConstraints)
+        
+        
     }
     
     // TODO: create an IBAction for your login button
-    
-    
+    func login(sender: UIButton) {
+        let username = usernameText.text
+        let password = passwordText.text
+        authenticateUser(username: username, password: password)
+    }
     
     
     
